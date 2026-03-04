@@ -1,0 +1,24 @@
+name: Ads Monitoring
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Run monitoring script
+        run: python monitor_py.py
