@@ -5,6 +5,7 @@ from datetime import date, timedelta
 
 ACCESS_TOKEN = os.environ.get("TIKTOK_ACCESS_TOKEN")
 LARK_WEBHOOK = os.environ.get("LARK_WEBHOOK")
+LARK_WEBHOOK_GROUP = os.environ.get("LARK_WEBHOOK_GROUP")
 ADVERTISER_ID = "7475226930304794640"
 STORE_ID = "7494967026872191592"
 ROI_THRESHOLD = 5
@@ -115,10 +116,13 @@ ROI: {week_roi}
 📊 CAMPAIGN BREAKDOWN (Today)
 {breakdown_text}"""
 
-# Step 6: Send to Lark
-requests.post(LARK_WEBHOOK, json={
-    "msg_type": "text",
-    "content": {"text": message}
-})
+# Step 6: Send to both Lark webhooks
+for webhook in [LARK_WEBHOOK, LARK_WEBHOOK_GROUP]:
+    if webhook:
+        requests.post(webhook, json={
+            "msg_type": "text",
+            "content": {"text": message}
+        })
+
 print("Report sent to Lark!")
 print(message)
