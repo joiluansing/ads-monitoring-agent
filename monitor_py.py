@@ -1,12 +1,13 @@
 import requests
 import json
+import os
 from datetime import date, timedelta
 
-ACCESS_TOKEN = "30d4777968406ecabd9da3b6636531c1f01dbc9e"
+ACCESS_TOKEN = os.environ.get("TIKTOK_ACCESS_TOKEN")
+LARK_WEBHOOK = os.environ.get("LARK_WEBHOOK")
 ADVERTISER_ID = "7475226930304794640"
 STORE_ID = "7494967026872191592"
 ROI_THRESHOLD = 5
-LARK_WEBHOOK = os.environ.get("LARK_WEBHOOK")
 
 headers = {"Access-Token": ACCESS_TOKEN}
 today = date.today().strftime("%Y-%m-%d")
@@ -115,10 +116,9 @@ ROI: {week_roi}
 {breakdown_text}"""
 
 # Step 6: Send to Lark
-r = requests.post(LARK_WEBHOOK, json={
+requests.post(LARK_WEBHOOK, json={
     "msg_type": "text",
     "content": {"text": message}
 })
-print("Lark response:", r.json())
-print("\n--- MESSAGE PREVIEW ---")
+print("Report sent to Lark!")
 print(message)
