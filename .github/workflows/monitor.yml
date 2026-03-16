@@ -1,9 +1,9 @@
 name: Ads Monitoring
 
 on:
-  workflow_dispatch:
   schedule:
     - cron: "0 * * * *"
+  workflow_dispatch:
 
 jobs:
   run-script:
@@ -23,3 +23,6 @@ jobs:
 
       - name: Run monitoring script
         run: python monitor_py.py
+        env:
+          TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
+          LARK_WEBHOOK: ${{ secrets.LARK_WEBHOOK }}
