@@ -1,5 +1,6 @@
 import requests
 import os
+import json
 
 ACCESS_TOKEN = os.getenv("TIKTOK_ACCESS_TOKEN")
 
@@ -19,8 +20,8 @@ for adv in advertisers:
         "advertiser_id": adv["id"],
         "report_type": "BASIC",
         "data_level": "CAMPAIGN",
-        "dimensions": ["campaign_name"],
-        "metrics": ["spend","impressions","clicks"],
+        "dimensions": json.dumps(["campaign_name"]),
+        "metrics": json.dumps(["spend", "impressions", "clicks"]),
         "page": 1,
         "page_size": 50
     }
